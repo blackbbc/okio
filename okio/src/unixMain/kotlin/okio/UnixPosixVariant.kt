@@ -25,7 +25,6 @@ import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.toKString
 import okio.Path.Companion.toPath
 import okio.internal.toPath
-import platform.posix.DEFFILEMODE
 import platform.posix.ENOENT
 import platform.posix.FILE
 import platform.posix.O_CREAT
@@ -34,6 +33,12 @@ import platform.posix.O_RDWR
 import platform.posix.PATH_MAX
 import platform.posix.S_IFLNK
 import platform.posix.S_IFMT
+import platform.posix.S_IRUSR
+import platform.posix.S_IWUSR
+import platform.posix.S_IRGRP
+import platform.posix.S_IWGRP
+import platform.posix.S_IROTH
+import platform.posix.S_IWOTH
 import platform.posix.errno
 import platform.posix.fdopen
 import platform.posix.fileno
@@ -51,6 +56,8 @@ import platform.posix.rename
 import platform.posix.stat
 import platform.posix.symlink
 import platform.posix.timespec
+
+private const val DEFFILEMODE = S_IRUSR or S_IWUSR or S_IRGRP or S_IWGRP or S_IROTH or S_IWOTH
 
 internal actual val PLATFORM_TEMPORARY_DIRECTORY: Path
   get() {

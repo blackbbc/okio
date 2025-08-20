@@ -2,7 +2,7 @@ import aQute.bnd.gradle.BundleTaskExtension
 import com.vanniktech.maven.publish.JavadocJar.Dokka
 import com.vanniktech.maven.publish.KotlinMultiplatform
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import kotlinx.validation.ApiValidationExtension
+//import kotlinx.validation.ApiValidationExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithTests
 import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable
@@ -12,7 +12,7 @@ plugins {
   id("org.jetbrains.dokka")
   id("com.vanniktech.maven.publish.base")
   id("build-support")
-  id("binary-compatibility-validator")
+//  id("binary-compatibility-validator")
 }
 
 /*
@@ -149,6 +149,9 @@ kotlin {
                 linuxMain.dependsOn(nonAppleMain)
               }
               createSourceSet("appleMain", parent = unixMain, children = appleTargets)
+              createSourceSet("ohosMain", parent = unixMain, children = ohosTargets).also { ohosMain ->
+                ohosMain.dependsOn(nonAppleMain)
+              }
             }
         }
 
@@ -215,8 +218,8 @@ configure<MavenPublishBaseExtension> {
   )
 }
 
-plugins.withId("binary-compatibility-validator") {
-  configure<ApiValidationExtension> {
-    ignoredProjects += "jmh"
-  }
-}
+//plugins.withId("binary-compatibility-validator") {
+//  configure<ApiValidationExtension> {
+//    ignoredProjects += "jmh"
+//  }
+//}

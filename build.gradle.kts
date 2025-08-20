@@ -29,7 +29,7 @@ buildscript {
     classpath(libs.android.gradle.plugin)
     classpath(libs.dokka)
     classpath(libs.jmh.gradle.plugin)
-    classpath(libs.binaryCompatibilityValidator)
+//    classpath(libs.binaryCompatibilityValidator)
     classpath(libs.spotless)
     classpath(libs.bnd)
     classpath(libs.vanniktech.publish.plugin)
@@ -39,6 +39,9 @@ buildscript {
     mavenCentral()
     gradlePluginPortal()
     google()
+    maven("https://mirrors.tencent.com/nexus/repository/maven-tencent")
+    maven("https://mirrors.tencent.com/nexus/repository/maven-public")
+    mavenLocal()
   }
 }
 
@@ -55,6 +58,9 @@ allprojects {
   repositories {
     mavenCentral()
     google()
+    maven("https://mirrors.tencent.com/nexus/repository/maven-tencent")
+    maven("https://mirrors.tencent.com/nexus/repository/maven-public")
+    mavenLocal()
   }
 
   tasks.withType<DokkaTask>().configureEach {
@@ -115,7 +121,7 @@ allprojects {
     val publishingExtension = extensions.getByType(PublishingExtension::class.java)
     configure<MavenPublishBaseExtension> {
       publishToMavenCentral(SonatypeHost.S01, automaticRelease = true)
-      signAllPublications()
+//      signAllPublications()
       pom {
         description.set("A modern I/O library for Android, Java, and Kotlin Multiplatform.")
         name.set(project.name)

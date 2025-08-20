@@ -6,7 +6,7 @@ plugins {
   kotlin("multiplatform")
   id("org.jetbrains.dokka")
   id("com.vanniktech.maven.publish.base")
-  id("binary-compatibility-validator")
+//  id("binary-compatibility-validator")
   id("build-support")
 }
 

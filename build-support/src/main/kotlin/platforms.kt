@@ -56,6 +56,7 @@ fun KotlinMultiplatformExtension.configureOrCreateNativePlatforms() {
   macosX64()
   macosArm64()
   mingwX64()
+  ohosArm64()
 }
 
 val appleTargets = listOf(
@@ -83,7 +84,11 @@ val linuxTargets = listOf(
   "linuxArm64",
 )
 
-val nativeTargets = appleTargets + linuxTargets + mingwTargets
+val ohosTargets = listOf(
+  "ohosArm64",
+)
+
+val nativeTargets = appleTargets + linuxTargets + mingwTargets + ohosTargets
 
 val wasmTargets = listOf(
   "wasmJs",
