@@ -19,6 +19,7 @@ import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import platform.posix.ENOENT
+import platform.posix.ENOTDIR
 import platform.posix.S_IFDIR
 import platform.posix.S_IFMT
 import platform.posix.S_IFREG
@@ -30,7 +31,9 @@ internal actual fun PosixFileSystem.variantMetadataOrNull(path: Path): FileMetad
   return memScoped {
     val stat = alloc<stat>()
     if (lstat(path.toString(), stat.ptr) != 0) {
-      if (errno == ENOENT) return null
+      // ENOTDIR: an ancestor is a regular file. Like ENOENT the path cannot exist; the JVM
+      // file systems return null here too, so common code behaves the same on both.
+      if (errno == ENOENT || errno == ENOTDIR) return null
       throw errnoToIOException(errno)
     }
     return@memScoped FileMetadata(
